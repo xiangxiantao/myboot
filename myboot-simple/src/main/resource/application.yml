@@ -1,0 +1,54 @@
+
+
+server:
+  port: 8081
+  context-path: /sim
+
+###测试值的写法
+
+##1.字面量
+#字符串不用加上单引号或者双引号
+#加了双引号：不会转义特殊字符
+#加了单引号：会将特殊字符转译为普通字符串
+
+name1: zhangsan \n hhh
+name2: 'zhangsan \n hhh'
+name3: "zhangsan \n hhh"
+
+
+##2.对象的表示方法
+#第一种写法
+person1:
+  name: zhangsan${random.uuid}
+  age: ${random.int}
+  birth: 1995/05/23
+
+#第二种写法
+person2: {  name: xxt , age: 23 , birth: 1997/03/02}
+
+
+##3.数组的表示方法
+#第一种写法
+pets1:
+  - cat
+  - dog
+  - pig
+
+#行内写法
+pets2: [cat,pet,pig]
+
+
+spring:
+  profiles:
+    active: sit
+  application:
+    name: simple
+
+##开启spring自动配置分析报告
+debug: true
+logging:
+  level:
+    com.xxt: debug
+    org.springframwork: debug
+  ##file: springboot.log
+
