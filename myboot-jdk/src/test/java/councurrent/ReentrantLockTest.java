@@ -2,6 +2,7 @@ package councurrent;
 
 import org.junit.Test;
 
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
@@ -267,9 +268,55 @@ class ReadWriteLockTask{
         try {
             lock.lock();
             Thread.sleep(1000);//模拟一个耗时的读操作
+            System.out.println("读到的数："+value);
             return value;
         }finally {
             lock.unlock();
+        }
+    }
+
+    public void handleWrite(Lock lock,int index) throws InterruptedException {
+        try {
+            lock.lock();
+            Thread.sleep(1000);//模拟耗时的写操作
+            System.out.println("写入的数："+index);
+            value=index;
+        }finally {
+            lock.unlock();
+        }
+    }
+
+    public static void main(String[] args) {
+
+        final ReadWriteLockTask readWriteLockTask=new ReadWriteLockTask();
+        Runnable readTask=new Runnable() {
+            @Override
+            public void run() {
+                try {
+                 //readWriteLockTask.handleRead(lock);
+                 readWriteLockTask.handleRead(readLock);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Runnable writeTask=new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    //readWriteLockTask.handleWrite(lock,new Random().nextInt());
+                    readWriteLockTask.handleWrite(writeLock,new Random().nextInt());
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        for (int i = 0; i < 18; i++) {//模拟18个读线程
+            new Thread(readTask).start();
+        }
+        for (int i = 18; i < 20; i++) {//模拟两个写线程
+            new Thread(writeTask).start();
         }
     }
 }
