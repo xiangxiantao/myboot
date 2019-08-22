@@ -3,10 +3,7 @@ package councurrent;
 import org.junit.Test;
 
 import java.util.Random;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Semaphore;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 import java.util.concurrent.locks.*;
 
 /**
@@ -133,6 +130,10 @@ public class ReentrantLockTest {
     }
 
 
+    /**
+     * 测试semaphore
+     * @param args
+     */
     public static void main(String[] args) {
         ExecutorService service= Executors.newFixedThreadPool(20);
         final SemaphoreTask task=new SemaphoreTask();
@@ -141,6 +142,20 @@ public class ReentrantLockTest {
         }
 
         service.shutdown();
+    }
+
+    /**
+     *  测试countDownLauch
+     */
+    @Test
+    public void testCountDownLauch() throws InterruptedException {
+        CountDownLatchTask countDownLatchTask=new CountDownLatchTask();
+        ExecutorService service=Executors.newFixedThreadPool(5);
+        for (int i = 0; i < 10; i++) {
+            service.execute(countDownLatchTask);
+        }
+
+        countDownLatchTask.fire();
     }
 
 }
@@ -319,4 +334,29 @@ class ReadWriteLockTask{
             new Thread(writeTask).start();
         }
     }
+}
+
+class CountDownLatchTask implements Runnable{
+
+    static final CountDownLatch countDown=new CountDownLatch(10);
+
+    @Override
+    public void run() {
+        try {
+            Thread.sleep(3000);//模拟耗时的检查任务
+            System.out.println("check complete");
+            countDown.countDown();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void fire() throws InterruptedException {
+        countDown.await();
+        System.out.println("all check completed,let's fire");
+    }
+
+
+
 }
