@@ -9,6 +9,17 @@ import org.junit.Test;
  * @modified By：
  */
 
+/**
+ * JVM的锁优化机制：
+ * 1.偏向锁
+ * 2.轻量级锁
+ * 3.自旋锁
+ * 4.锁消除：清除不存在共享资源竞争的锁,如不需要同步的地方使用了vectord等线程安全的容器
+ *           锁清除需要使用逃逸分析，分析锁中的变量是否会逃逸到作用域之外的地方
+ *           锁消除满足的条件：1.-server模式
+ *                             2.-XX:DoEscapeAnalysis  打开逃逸分析
+ *                             3.-XX:EliminateLocks 开启锁清除功能
+ */
 public class LockTest {
 
     final static Object lock=new Object();

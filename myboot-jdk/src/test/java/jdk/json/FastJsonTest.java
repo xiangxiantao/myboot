@@ -130,6 +130,17 @@ public class FastJsonTest {
     }
 
 
+    @Test
+    public void testExtendsJson(){
+        Simple simple=new Simple();
+        simple.setCode("200");
+        simple.setMsg("msg");
+        simple.setBody("body");
+        System.out.println(JSONObject.toJSONString(simple));
+        System.out.println(simple.toString());
+    }
+
+
 
 
 }
@@ -203,4 +214,18 @@ enum TestEnum implements BaseEnum{
     public String value() {
         return value;
     }
+}
+
+@Data
+class Base{
+    public String code;
+
+    public String msg;
+}
+
+@Data
+class Simple extends Base{
+    public String body;
+
+
 }
