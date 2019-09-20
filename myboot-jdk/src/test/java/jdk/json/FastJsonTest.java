@@ -112,8 +112,8 @@ public class FastJsonTest {
         simpleBean.setAge("12");
         //simpleBean.setDate(new Date());
         simpleBean.setAnEnum(TestEnum.EnumA);//默认会将其序列化为枚举的名的字符串
-        String string = JSONObject.toJSONString(simpleBean,
-                SerializerFeature.WriteMapNullValue);
+        String string = JSONObject.toJSONString(simpleBean/*,
+                SerializerFeature.WriteMapNullValue*/);
         System.out.println(string);
     }
 
@@ -133,7 +133,7 @@ public class FastJsonTest {
     @Test
     public void testExtendsJson(){
         Simple simple=new Simple();
-        simple.setCode("200");
+        simple.setCode("");
         simple.setMsg("msg");
         simple.setBody("body");
         System.out.println(JSONObject.toJSONString(simple));
