@@ -1,4 +1,8 @@
 package com.xxt.mybatisDemo.entity;
+
+import java.time.LocalDateTime;
+import java.util.Date;
+
 /**
  *@ClassName Student
  *@Description TODO
@@ -11,8 +15,10 @@ public class Student {
     private Integer sId;
     private String sName;
     private String classId;
+    private LocalDateTime createTime;
     private Class aClass;
     private StudentStatus studentStatus;
+
 
     public Student(){}
     public Student(String sName, String classId) {
@@ -47,16 +53,17 @@ public class Student {
         this.sName = sName;
     }
 
+
+    public Class getaClass() {
+        return aClass;
+    }
+
     public String getClassId() {
         return classId;
     }
 
     public void setClassId(String classId) {
         this.classId = classId;
-    }
-
-    public Class getaClass() {
-        return aClass;
     }
 
     public void setaClass(Class aClass) {
@@ -69,6 +76,14 @@ public class Student {
 
     public void setStudentStatus(StudentStatus studentStatus) {
         this.studentStatus = studentStatus;
+    }
+
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
     }
 
     @Override

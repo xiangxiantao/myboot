@@ -12,4 +12,73 @@
         SELECT * FROM student WHERE s_id=#{sId}
     </select>
 
+    <select id="selectById3" parameterType="int" resultType="map">
+        SELECT * FROM student WHERE s_id=#{sId}
+    </select>
+
+    <select id="selectByIds1" resultType="com.xxt.mybatisDemo.entity.Student">
+        SELECT * FROM student
+        <where>
+            s_id in
+            <foreach collection="ids" index="idx" item="item" separator="," open="(" close=")">
+                #{item}
+            </foreach>
+        </where>
+    </select>
+
+    <select id="selectByIds2" resultType="com.xxt.mybatisDemo.entity.Student">
+        SELECT * FROM student
+        <where>
+            s_id in
+            <foreach collection="ids" index="idx" item="item" separator="," open="(" close=")">
+                #{item}
+            </foreach>
+        </where>
+    </select>
+
+    <select id="selectByIds3" resultType="com.xxt.mybatisDemo.entity.Student">
+        SELECT * FROM student
+        <where>
+            <if test="classId !=null">
+                and class_id=#{classId}
+            </if>
+            <if test="ids != null">
+                and s_id in
+                <foreach collection="ids" index="idx" item="item" separator="," open="(" close=")">
+                    #{item}
+                </foreach>
+            </if>
+
+        </where>
+    </select>
+
+    <select id="selectByIds4" resultType="com.xxt.mybatisDemo.entity.Student">
+        SELECT * FROM student
+        <where>
+            <if test="classId !=null">
+                and class_id=#{classId}
+            </if>
+            <if test="ids != null">
+                and s_id in
+                <foreach collection="ids" index="idx" item="item" separator="," open="(" close=")">
+                    #{item}
+                </foreach>
+            </if>
+
+        </where>
+    </select>
+
+    <select id="selectByTime1" parameterType="string" resultType="com.xxt.mybatisDemo.entity.Student">
+        SELECT * FROM student WHERE create_time=#{time} AND s_id in ('1','2','3','4','5')
+    </select>
+
+    <select id="selectByTime2" parameterType="date" resultType="com.xxt.mybatisDemo.entity.Student">
+        SELECT * FROM student WHERE create_time=#{time} AND s_id in ('1','2','3','4','5')
+    </select>
+
+    <select id="selectByTime3" parameterType="java.time.LocalDateTime" resultType="com.xxt.mybatisDemo.entity.Student">
+        SELECT * FROM student WHERE create_time=#{time} AND s_id in ('1','2','3','4','5')
+    </select>
+
+
 </mapper>
