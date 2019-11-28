@@ -1,5 +1,6 @@
 package jdk.collection;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
 import java.util.*;
@@ -62,6 +63,16 @@ public class ListTest {
         arrayList.add("ele4");
     }
 
+    @Test
+    public void split(){
+        List<String> list=new ArrayList<String>();
+        list.add("a");
+        list.add("b");
+        list.add("c");
+        list.add("d");
+        String join = StringUtils.join(list, ",");
+        System.out.println(join);
+    }
 
 
 }
