@@ -1,6 +1,8 @@
 package com.xxt.letcode;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Solution {
 
@@ -95,9 +97,55 @@ public class Solution {
         return true;
     }
 
+    /**
+     * 11.盛水最多的容器
+     * @param height
+     * @return
+     */
+    public int maxArea(int[] height) {
+        int maxArea=0;
+        int head=0;
+        int front=height.length-1;
+        while (head<front){
+            maxArea=Math.max(maxArea,Math.min(height[head],height[front])*(front-head));
+            if (height[head]>height[front]) front--;
+            else head++;
+        }
+        return maxArea;
+    }
 
+    /**
+     * 三数之和
+     * @param nums
+     * @return
+     */
+    public static List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> result=new ArrayList<>();
+        for(int i=0;i<nums.length;i++){
+            for(int k=i+1;k<nums.length;k++){
+                for(int j=k+1;j<nums.length;j++){
+                    if(i+j+k==0){
+                        boolean contains=false;
+                        for(List list :result){
+                            if(list.contains(nums[i])&&list.contains(nums[k])&&list.contains(nums[j])) contains=true;
+                        }
+                        if(!contains){
+                            List<Integer> list=new ArrayList<>();
+                            list.add(nums[i]);
+                            list.add(nums[j]);
+                            list.add(nums[k]);
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+
+    }
     public static void main(String[] args) {
-        System.out.println(longestPalindrome("babad"));
+        int[] nums={-1, 0, 1, 2, -1, -4};
+        List<List<Integer>> lists = threeSum(nums);
+        System.out.println(lists);
 
     }
 
