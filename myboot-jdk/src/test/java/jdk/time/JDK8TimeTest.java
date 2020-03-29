@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Java 8中表示日期和时间的类有多个，主要的有：
@@ -77,6 +78,14 @@ public class JDK8TimeTest {
                 LocalTime.of(9,0),
                 LocalTime.now()).toMinutes();
         System.out.println(lateMinutes);
+    }
+
+    @Test
+    public void testTimeUnit() throws InterruptedException {
+        long startTimes = System.currentTimeMillis();
+        Thread.sleep(3000);
+        long endTimes = System.currentTimeMillis();
+        System.out.println(TimeUnit.SECONDS.convert(endTimes-startTimes,TimeUnit.MILLISECONDS));
     }
 
 }

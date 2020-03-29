@@ -1,4 +1,4 @@
-package com.xxt;
+package com.xxt.proxy;
 
 public interface MyInter {
 
