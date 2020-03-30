@@ -11,19 +11,25 @@ import java.util.concurrent.Executors;
 public class TockenBucket {
 
     public static void main(String[] args) {
-        final RateLimiter rateLimiter = RateLimiter.create(100.0);//每秒放出两个令牌 QPS=2.0
+        final RateLimiter rateLimiter = RateLimiter.create(100);//每秒放出两个令牌 QPS=2.0
         ExecutorService executorService = Executors.newFixedThreadPool(5);
+        int j=0;
         for (int i = 0; i < 100; i++) {
             //一直阻塞直到获取到令牌
-            rateLimiter.acquire();
-            executorService.execute(new Runnable() {
-                @Override
-                public void run() {
-                    System.out.println(Thread.currentThread() + "任务正在执行");
-                }
-            });
+            //rateLimiter.acquire();
+            if (rateLimiter.tryAcquire()) {
+                executorService.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        System.out.println(Thread.currentThread() + "任务正在执行");
+                    }
+                });
+                j++;
+            }
+
         }
         executorService.shutdown();
+        System.out.println(j);
     }
 
 }
